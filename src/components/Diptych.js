@@ -67,64 +67,6 @@ export default class Diptych extends Component {
     console.log(concatArr.contents);
 
     this.props.setChannelData(concatArr.contents)
-
-    // let title = iniContents.title
-    // let contents = iniContents.contents;
-
-    // console.log(contents);
-    
-    
-
-    // axios.get(`https://api.are.na/v2/channels/${this.props.chan}`, {
-    //   page: 1,
-    //   per: itemsPerPage
-    // })
-    //   .then(res => {
-    //     const data = res;
-    //     console.log(data);
-    //     this.props.setChannelData(res)
-    //   })
-
-    // arena
-    //   .channel(chan).get({ page: iniPage, per: 100 })
-    //   .then(function (res) {
-    //     totalPages = Math.ceil(res.length / itemsPerPage);
-    //     console.log('Number of blocks', res.length)
-    //     console.log('Total pages', totalPages);
-    //   }).then(function(res) {
-    //     for (let i = iniPage; i < totalPages; i++) {
-    //       arena.channel(chan).get({page: i, per: itemsPerPage})
-    //       .then(function(res) {
-    //         blockArray.push(res.contents);
-    //       })
-    //     }
-    //   }).then(function() {
-    //     console.log(blockArray);
-    //     concatArr.contents = [].concat.apply([], blockArray);
-    //     setChannelData(concatArr)
-    //   })
-    //   .catch(err => console.log(err))
-
-    // arena.channel(chan).get({ page: iniPage, per: itemsPerPage })
-    //   .then(res => {
-    //     totalPages = Math.ceil(res.length / itemsPerPage);
-    //     console.log('Number of blocks', res.length)
-    //     console.log('Total pages', totalPages);
-    //     title = res.title
-    //     contents = res.contents
-    //   }).then(res => {
-    //     for (let i = iniPage; i < totalPages; i++) {
-    //       arena.channel(chan).get({page: i}).then(res => {
-    //         blockArray.push(res.contents)
-    //       })
-    //     }
-    //   }).then(res => {
-    //     console.log(blockArray);
-        
-    //     setChannelData(contents)
-    //   })
-
-    
   }
 
   render() {
