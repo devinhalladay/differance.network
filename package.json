@@ -17,6 +17,11 @@
     "tachyons": "^4.11.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "bankai": "^9.15.0",
     "choo-devtools": "^2.5.1",
     "choo-scaffold": "^1.2.0",
