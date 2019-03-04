@@ -13,7 +13,6 @@ class App extends Component {
     super(props);
     this.state = {
       channel: '',
-      redirect: false,
       channelData: []
     };
 
@@ -36,14 +35,17 @@ class App extends Component {
   render() {
     return (
       <Router>
-      <React.Fragment>
-        <Route 
-          exact
-          path="/"
-          render={(props) => <Home {...props} shouldRedirect={this.state.redirect} chan={this.state.channel} handleChange={this.handleChange}/>} 
-          />
-          <Route path="/:channel" render={(props) => <Diptych {...props} chan={this.state.channel} setChannelData={this.setChannelData} channelData={this.state.channelData} />} />
-        </React.Fragment>
+        <React.Fragment>
+          <div className="site-title">
+            <a href="/">Différance.network</a>
+          </div>
+          <Route 
+            exact
+            path="/"
+            render={(props) => <Home {...props} shouldRedirect={this.state.redirect} chan={this.state.channel} handleChange={this.handleChange}/>} 
+            />
+            <Route path="/:channel" render={(props) => <Diptych {...props} chan={this.state.channel} setChannelData={this.setChannelData} channelData={this.state.channelData} />} />
+          </React.Fragment>
       </Router>
     )
   }

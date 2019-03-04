@@ -16,11 +16,8 @@ export default class Home extends Component {
   render() {
     return (
       <React.Fragment>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Channel:
-            <input type="text" onChange={this.props.handleChange}/>
-          </label>
+        <form className="channel-url-form" onSubmit={this.handleSubmit}>
+          <input placeholder="Are.na channel URL" type="text" onChange={this.props.handleChange}/>
           <input type="submit" value="Submit" />
         </form>
       </React.Fragment>
