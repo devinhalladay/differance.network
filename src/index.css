@@ -28,6 +28,7 @@ img {
   position: absolute;
   top: 20px;
   left: 20px;
+  z-index: 999
 }
 
 .reload-button {
@@ -41,6 +42,7 @@ img {
   position: absolute;
   top: 20px;
   right: 20px;
+  z-index: 999;
 }
 
 .site-title a {
@@ -95,6 +97,13 @@ img {
   width: 100vw;
 }
 
+
+@media (max-width: 800px) {
+  .dyptich {
+    grid-template-columns: 1fr;
+  }
+}
+
 .recto, .verso {
   text-align: center;
 }
@@ -118,6 +127,10 @@ section.info {
   font-size: 20px;
   line-height: 1.6;
   max-width: 600px;
+}
+
+section {
+  padding: 0 40px
 }
 
 a {

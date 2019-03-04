@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "Différance.Network",
+  "alias": ["differance.now.sh"],
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+}
