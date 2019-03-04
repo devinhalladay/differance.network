@@ -98,6 +98,7 @@ export default class Diptych extends Component {
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     this.getChannelData();
     this.props.unsetRedirect();
   }
