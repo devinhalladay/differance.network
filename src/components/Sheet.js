@@ -5,6 +5,7 @@ export default class Sheet extends Component {
   constructor(props) {
     super(props);
   }
+  
 
   render() {
     let blockRepresentation;

@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import {Switch, withRouter} from 'react-router';
+import PropTypes from "prop-types";
+
 
 import Home from './components/Home'
 import Diptych from './components/Diptych'
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       channel: '',
       channelData: [],
@@ -21,13 +27,6 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({
-      url: this.chanInput.value,
-      channel: this.chanInput.value.substr(this.chanInput.value.lastIndexOf('/') + 1)
-    });
-  }
-
   setChannelData(res) {
     this.setState({
       channelData: res
@@ -37,8 +36,9 @@ class App extends Component {
   handleSubmit(e) {
     // this.props.history.push(chan);
     e.preventDefault();
-    let chan = this.chanInput.value;
-    this.props.history.push(chan)
+    let chanParts = this.chanInput.value.split('/');
+    let chan = chanParts.pop() || chanParts.pop();
+    this.context.router.history.push(chan);
 
     this.setState({
       url: this.chanInput.value,
@@ -50,14 +50,14 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <React.Fragment>
           <div className="site-title">
             <Link to="/">Différance.Network</Link>
           </div>
 
           <section className="form">
-            <form className="channel-url-form" onSubmit={this.handleSubmit.bind(this)}>
+            <form className="channel-url-form" onSubmit={this.handleSubmit}>
               <input placeholder="Are.na channel URL" defaultValue={this.state.url} type="text" ref={ (input) => this.chanInput = input } />
               <input type="submit" value="Show me the way →" />
             </form>
@@ -72,9 +72,9 @@ class App extends Component {
               <Route path="/:channel" render={(props) => <Diptych {...props} chan={this.state.channel} setChannelData={this.setChannelData} channelData={this.state.channelData} />} />
           </Switch>
         </React.Fragment>
-      </Router>
+      </BrowserRouter>
     )
   }
 }
 
-export default App;
+export default withRouter(App);
