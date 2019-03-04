@@ -38,11 +38,12 @@ class App extends Component {
     e.preventDefault();
     let chanParts = this.chanInput.value.split('/');
     let chan = chanParts.pop() || chanParts.pop();
-    this.context.router.history.push(chan);
+    // this.context.router.history.push(chan);
 
     this.setState({
       url: this.chanInput.value,
-      channel: chan
+      channel: chan,
+      toSheets: true
     });
 
     console.log(chan);
@@ -62,6 +63,8 @@ class App extends Component {
               <input type="submit" value="Show me the way →" />
             </form>
           </section>
+
+          {this.state.toSheets ? <Redirect to={this.state.channel} push /> : ''}
 
           <Switch>
             <Route 
