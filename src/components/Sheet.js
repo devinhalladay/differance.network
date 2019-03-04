@@ -19,7 +19,7 @@ export default class Sheet extends Component {
     } else if (this.props.blockType === 'Text') {
       blockRepresentation = (
         <div className="block block--text">
-          <p>{ReactHtmlParser(block.content_html)}</p>
+          {ReactHtmlParser(block.content_html)}
         </div>
       )
     } else if (this.props.blockType === 'Link' && block.source) {

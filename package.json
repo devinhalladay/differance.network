@@ -5,6 +5,8 @@
   "dependencies": {
     "are.na": "^0.1.1",
     "axios": "^0.18.0",
+    "history": "^4.7.2",
+    "node-sass": "^4.11.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-html-parser": "^2.0.2",

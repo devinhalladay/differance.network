@@ -95,14 +95,21 @@ export default class Diptych extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment key={this.state.key}>
-        <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
-        <div className="dyptich">
-          <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
-          <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
-        </div>
-      </React.Fragment>
-    )
+    if (this.state.versoBlock && this.state.rectoBlock) {
+      return (
+        <React.Fragment key={this.state.key}>
+          <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
+          <div className="dyptich">
+            <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
+            <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
+          </div>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <p>Channel not found. Why not <a href="https://www.are.na/">create it</a>?</p>
+      )
+    }
+    
   }
 }

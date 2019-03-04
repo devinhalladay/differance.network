@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {withRouter} from 'react-router';
+import {Switch, withRouter} from 'react-router';
 
 import Home from './components/Home'
 import Diptych from './components/Diptych'
@@ -12,16 +12,19 @@ class App extends Component {
     super(props);
     this.state = {
       channel: '',
-      channelData: []
+      channelData: [],
+      url: '',
+      toSheets: false
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.setChannelData = this.setChannelData.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
+  componentDidMount() {
     this.setState({
-      channel: e.target.value.substr(e.target.value.lastIndexOf('/') + 1)
+      url: this.chanInput.value,
+      channel: this.chanInput.value.substr(this.chanInput.value.lastIndexOf('/') + 1)
     });
   }
 
@@ -31,20 +34,44 @@ class App extends Component {
     });
   }
 
+  handleSubmit(e) {
+    // this.props.history.push(chan);
+    e.preventDefault();
+    let chan = this.chanInput.value;
+    this.props.history.push(chan)
+
+    this.setState({
+      url: this.chanInput.value,
+      channel: chan
+    });
+
+    console.log(chan);
+  }
+
   render() {
     return (
       <Router>
         <React.Fragment>
           <div className="site-title">
-            <a href="/">Différance.network</a>
+            <Link to="/">Différance.Network</Link>
           </div>
-          <Route 
-            exact
-            path="/"
-            render={(props) => <Home {...props} shouldRedirect={this.state.redirect} chan={this.state.channel} handleChange={this.handleChange}/>} 
-            />
-            <Route path="/:channel" render={(props) => <Diptych {...props} chan={this.state.channel} setChannelData={this.setChannelData} channelData={this.state.channelData} />} />
-          </React.Fragment>
+
+          <section className="form">
+            <form className="channel-url-form" onSubmit={this.handleSubmit.bind(this)}>
+              <input placeholder="Are.na channel URL" defaultValue={this.state.url} type="text" ref={ (input) => this.chanInput = input } />
+              <input type="submit" value="Show me the way →" />
+            </form>
+          </section>
+
+          <Switch>
+            <Route 
+              exact
+              path="/"
+              render={(props) => <Home {...props} />} 
+              />
+              <Route path="/:channel" render={(props) => <Diptych {...props} chan={this.state.channel} setChannelData={this.setChannelData} channelData={this.state.channelData} />} />
+          </Switch>
+        </React.Fragment>
       </Router>
     )
   }
