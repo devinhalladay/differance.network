@@ -83,7 +83,7 @@ class App extends Component {
           <section className="form">
             <form style={{ right: this.state.channel ? '8em' : '20px' }}className="channel-url-form" onSubmit={this.handleSubmit}>
               <input placeholder="Are.na channel URL" defaultValue={this.state.url} type="text" ref={ (input) => this.chanInput = input } />
-              <input type="submit" value="Show me the way →" />
+              <input type="submit" value={window.innerWidth > 800 ? "Show me the way →" : "Go →" } />
             </form>
           </section>
 

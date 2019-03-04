@@ -31,10 +31,8 @@ img {
   z-index: 999;
 
   @media (max-width: 800px) {
-    position: relative;
-    left: 0;
-    left: 20px;
-    align-self: flex-start;
+    bottom: 20px;
+    top: unset;
   }
 }
 
@@ -61,7 +59,7 @@ img {
   cursor: pointer;
 
   @media (max-width: 800px) {
-    position: relative;
+    // position: relative;
   }
 }
 
@@ -80,8 +78,7 @@ img {
   transition: 0.2s right ease-in-out;
 
   @media (max-width: 800px) {
-    position: relative;
-    left: 0;
+    left: 20px;
   }
 }
 
@@ -153,14 +150,21 @@ img {
 }
 
 section.info {
-  margin-top: 4em;
   font-size: 20px;
   line-height: 1.6;
   max-width: 600px;
 }
 
 section {
-  padding: 0 40px
+  padding: 0 40px;
+
+  &.form {
+    @media (max-width: 800px) {
+      align-self: flex-start;
+      padding-left: 20px;
+      padding-top: 20px;
+    }
+  }
 }
 
 a {
@@ -190,6 +194,11 @@ a {
     border-image: initial;
     border-radius: 0.125em;
     margin: auto;
+}
+
+.block.block--text {
+  display: flex;
+  justify-content: center;
 }
 
 .block.block--channel.open {
