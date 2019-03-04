@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {withRouter} from 'react-router';
-import './App.css';
 
 import Home from './components/Home'
 import Diptych from './components/Diptych'
@@ -22,7 +21,7 @@ class App extends Component {
 
   handleChange(e) {
     this.setState({
-      channel: e.target.value
+      channel: e.target.value.substr(e.target.value.lastIndexOf('/') + 1)
     });
   }
 

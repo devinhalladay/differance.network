@@ -53,7 +53,11 @@ export default class Verso extends Component {
     } else if (this.props.blockType === 'Channel') {
       blockRepresentation = (
         <div className="block block--channel">
-          <p>{block.title}</p>
+          <a target="_blank" href={`http://are.na/${block.user.slug}/${block.slug}`}>
+            <p>{block.title}</p>
+            <small>{block.user.full_name}</small>
+            <small>{block.length} Blocks</small>
+          </a>
         </div>
       )
     }

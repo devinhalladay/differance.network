@@ -24,16 +24,9 @@ export default class Diptych extends Component {
     this.state = {
       versoBlock: null,
       rectoBlock: null,
-
       rectoBlockType: null,
-      rectoImgSrc: null,
-      rectoLinkUrl: null,
-      rectoText: null,
-
       versoBlockType: null,
-      versoImgSrc: null,
-      versoLinkUrl: null,
-      versoText: null
+      key: 'value'
     }
   }
 
@@ -98,13 +91,19 @@ export default class Diptych extends Component {
     })
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
   render() {
     return (
-      <div className="dyptich">
-        <h2>{title}</h2>
-        <Verso block={this.state.versoBlock} blockType={this.state.versoBlockType}></Verso>
-        <Recto block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Recto>
-      </div>
+      <React.Fragment key={this.state.key}>
+        <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
+        <div className="dyptich">
+          <Verso block={this.state.versoBlock} blockType={this.state.versoBlockType}></Verso>
+          <Recto block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Recto>
+        </div>
+      </React.Fragment>
     )
   }
 }
