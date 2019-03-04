@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { iif } from 'rxjs';
+import Clipboard from 'react-clipboard.js';
 import Sheet from './Sheet'
 
 const Arena = require('are.na');
@@ -25,21 +24,38 @@ export default class Diptych extends Component {
       rectoBlock: null,
       rectoBlockType: null,
       versoBlockType: null,
+      versoBlockID: null,
+      rectoBlocID: null,
       loading: true
+    }
+
+    if (this.props.match.params.verso || this.props.match.params.recto) {
+      this.setState({
+        versoBlockID: this.props.match.params.verso,
+        rectoBlockID: this.props.match.params.recto
+      })
     }
   }
 
   apiCall(path, params) {
-    let endpoint = `https://api.are.na/v2/channels/${(this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL()}`
-    if (params) {
-      let pageNumber = params.page
-      let pageLength = params.per
-      endpoint = endpoint + "?page=" + pageNumber + "&amp;per=" + pageLength
+    if (this.state.versoBlockID || this.state.rectoBlocID) {
+      let endpoint = `https://api.are.na/v2/blocks/${blockId}}`
+      return fetch(endpoint, apiInit)
+        .then((response) => {
+          return response.json()
+        })
+    } else {
+      let endpoint = `https://api.are.na/v2/channels/${(this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL()}`
+      if (params) {
+        let pageNumber = params.page
+        let pageLength = params.per
+        endpoint = endpoint + "?page=" + pageNumber + "&amp;per=" + pageLength
+      }
+      return fetch(endpoint, apiInit)
+        .then((response) => {
+          return response.json()
+        })
     }
-    return fetch(endpoint, apiInit)
-      .then((response) => {
-        return response.json()
-      })
   }
 
   shuffle(a) {
@@ -90,6 +106,8 @@ export default class Diptych extends Component {
     this.setState({
       versoBlockType: this.state.versoBlock.class,
       rectoBlockType: this.state.rectoBlock.class,
+      versoBlockID: this.state.versoBlock.id,
+      rectoBlockID: this.state.rectoBlock.id,
     })
   }
 
@@ -116,6 +134,9 @@ export default class Diptych extends Component {
             <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
             <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
           </div>
+          <Clipboard className="copy-button" data-clipboard-text={`${window.location.href}/${this.state.versoBlockID}/${this.state.rectoBlockID}`}>
+            Copy Permalink
+          </Clipboard>
         </React.Fragment>
       )
     } else if (this.state.loading == true) {
@@ -127,13 +148,5 @@ export default class Diptych extends Component {
         <p>Channel not found. Why not <a href="https://www.are.na/">create it</a>?</p>
       )
     }
-
-
-    // else {
-    //   return (
-    //     <p>Channel not found. Why not <a href="https://www.are.na/">create it</a>?</p>
-    //   )
-    // }
-    
   }
 }

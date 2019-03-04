@@ -6,6 +6,7 @@ import { Switch } from 'react-router';
 
 import Home from './components/Home'
 import Diptych from './components/Diptych'
+import SavedDiptych from './components/SavedDiptych'
 import { timingSafeEqual } from 'crypto';
 
 
@@ -39,8 +40,8 @@ class App extends Component {
   }
 
   setStateFromURL() {
-    let chanParts = window.location.href.split('/');
-    let chan = chanParts.pop() || chanParts.pop();
+    let chanParts = window.location.pathname.split('/');
+    let chan = chanParts[1];
 
     this.setState({
       channel: chan,
@@ -56,7 +57,7 @@ class App extends Component {
   handleSubmit(e) {
     e.preventDefault();
     let chanParts = this.chanInput.value.split('/');
-    let chan = chanParts.pop() || chanParts.pop();
+    let chan = chanParts[1];
 
     this.setState({
       url: this.chanInput.value,
@@ -95,8 +96,21 @@ class App extends Component {
               path="/"
               render={(props) => <Home {...props} />} 
             />
+            {/* <Route
+              path="/:channel/:verso/:recto"
+              render={(props) =>
+                <SavedDiptych {...props}
+                  chan={this.state.channel}
+                  setChannelData={this.setChannelData}
+                  channelData={this.state.channelData}
+                  unsetRedirect={this.unsetRedirect}
+                  setStateFromURL={this.setStateFromURL}
+                  key={this.state.channel}
+                />
+              }
+            /> */}
             <Route 
-              path="/:channel" 
+              path="/:channel/:verso/:verso" 
               render={(props) => 
                 <Diptych {...props} 
                   chan={this.state.channel} 
