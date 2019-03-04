@@ -25,7 +25,7 @@ export default class Diptych extends Component {
       rectoBlock: null,
       rectoBlockType: null,
       versoBlockType: null,
-      key: 'value'
+      loading: false
     }
   }
 
@@ -57,7 +57,7 @@ export default class Diptych extends Component {
     return targetValue
   }
 
-  async componentDidMount() {
+  async getChannelData() {
     var itemsPerPage = 25;
     var concatArr = [];
     var chan = (this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL();
@@ -90,14 +90,19 @@ export default class Diptych extends Component {
     })
   }
 
+  componentDidMount() {
+    this.getChannelData();
+    this.props.unsetRedirect();
+  }
+
   refresh() {
-    window.location.reload();
+    this.getChannelData()
   }
 
   render() {
     if (this.state.versoBlock && this.state.rectoBlock) {
       return (
-        <React.Fragment key={this.state.key}>
+        <React.Fragment>
           <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
           <div className="dyptich">
             <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
@@ -107,9 +112,16 @@ export default class Diptych extends Component {
       )
     } else {
       return (
-        <p>Channel not found. Why not <a href="https://www.are.na/">create it</a>?</p>
+        <p>Loading…</p>
       )
     }
+
+
+    // else {
+    //   return (
+    //     <p>Channel not found. Why not <a href="https://www.are.na/">create it</a>?</p>
+    //   )
+    // }
     
   }
 }

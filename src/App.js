@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { BrowserRouter, Route, Link } from "react-router-dom";
-import {Switch, withRouter} from 'react-router';
-import PropTypes from "prop-types";
+import { Switch } from 'react-router';
 
 
 import Home from './components/Home'
@@ -10,21 +9,18 @@ import Diptych from './components/Diptych'
 
 
 class App extends Component {
-  static contextTypes = {
-    router: PropTypes.object
-  }
-
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       channel: '',
       channelData: [],
       url: '',
-      toSheets: false
+      redirect: false
     };
 
     this.setChannelData = this.setChannelData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.unsetRedirect = this.unsetRedirect.bind(this);
   }
 
   setChannelData(res) {
@@ -33,20 +29,27 @@ class App extends Component {
     });
   }
 
+  unsetRedirect() {
+    this.setState({
+      redirect: false
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.props = nextProps;
+  }
+
+
   handleSubmit(e) {
-    // this.props.history.push(chan);
     e.preventDefault();
     let chanParts = this.chanInput.value.split('/');
     let chan = chanParts.pop() || chanParts.pop();
-    // this.context.router.history.push(chan);
 
     this.setState({
       url: this.chanInput.value,
       channel: chan,
-      toSheets: true
+      redirect: true
     });
-
-    console.log(chan);
   }
 
   render() {
@@ -64,15 +67,26 @@ class App extends Component {
             </form>
           </section>
 
-          {this.state.toSheets ? <Redirect to={this.state.channel} push /> : ''}
+          {this.state.redirect ? <Redirect to={this.state.channel} push /> : ''}
 
           <Switch>
             <Route 
               exact
               path="/"
               render={(props) => <Home {...props} />} 
-              />
-              <Route path="/:channel" render={(props) => <Diptych {...props} chan={this.state.channel} setChannelData={this.setChannelData} channelData={this.state.channelData} />} />
+            />
+            <Route 
+              path="/:channel" 
+              render={(props) => 
+                <Diptych {...props} 
+                  chan={this.state.channel} 
+                  setChannelData={this.setChannelData} 
+                  channelData={this.state.channelData} 
+                  unsetRedirect={this.unsetRedirect}
+                  key={this.state.channel}
+                />
+              }
+            />
           </Switch>
         </React.Fragment>
       </BrowserRouter>
@@ -80,4 +94,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+export default App;
