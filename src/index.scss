@@ -28,7 +28,14 @@ img {
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 999
+  z-index: 999;
+
+  @media (max-width: 800px) {
+    position: relative;
+    left: 0;
+    left: 20px;
+    align-self: flex-start;
+  }
 }
 
 .block.block--text {
@@ -38,6 +45,7 @@ img {
 }
 
 .reload-button {
+  box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
   font-size: 18px;
   background: #ffffff;
   padding: 10px;
@@ -50,6 +58,11 @@ img {
   right: 20px;
   z-index: 999;
   outline: none;
+  cursor: pointer;
+
+  @media (max-width: 800px) {
+    position: relative;
+  }
 }
 
 .site-title a {
@@ -64,6 +77,12 @@ img {
   top: 20px;
   left: 14em;
   right: 8em;
+  transition: 0.2s right ease-in-out;
+
+  @media (max-width: 800px) {
+    position: relative;
+    left: 0;
+  }
 }
 
 .channel-url-form > * {
@@ -71,6 +90,7 @@ img {
 }
 
 .channel-url-form input[type="text"] {
+  box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.2);
   font-size: 1rem;
   height: 42px;
   border: 1px solid #bdbdbd;
@@ -80,6 +100,7 @@ img {
 }
 
 .channel-url-form input[type="submit"] {
+  box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
   width: fit-content;
   outline: none;
   font-size: 1rem;

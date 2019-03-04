@@ -25,7 +25,7 @@ export default class Diptych extends Component {
       rectoBlock: null,
       rectoBlockType: null,
       versoBlockType: null,
-      loading: false
+      loading: true
     }
   }
 
@@ -68,11 +68,13 @@ export default class Diptych extends Component {
 
     title = (await this.apiCall(chan)).title
 
-    for (let i = 0; i < totalPages; i++) {
-      blockArray.push((await this.apiCall(chan, {
-        page: i,
-        per: itemsPerPage
-      })).contents)
+    if (this.props.channelData) {
+      for (let i = 0; i < totalPages; i++) {
+        blockArray.push((await this.apiCall(chan, {
+          page: i,
+          per: itemsPerPage
+        })).contents)
+      }
     }
 
     concatArr.contents = [].concat.apply([], blockArray);
@@ -82,12 +84,17 @@ export default class Diptych extends Component {
     this.setState({
       versoBlock: this.props.channelData.slice(0, 2)[0],
       rectoBlock: this.props.channelData.slice(0, 2)[1],
+      loading: false
     })
 
     this.setState({
       versoBlockType: this.state.versoBlock.class,
       rectoBlockType: this.state.rectoBlock.class,
     })
+  }
+
+  componentWillMount() {
+    this.props.setStateFromURL();
   }
 
   componentDidMount() {
@@ -110,9 +117,13 @@ export default class Diptych extends Component {
           </div>
         </React.Fragment>
       )
-    } else {
+    } else if (this.state.loading == true) {
       return (
         <p>Loading…</p>
+      )
+    } else {
+      return (
+        <p>Channel not found. Why not <a href="https://www.are.na/">create it</a>?</p>
       )
     }
 

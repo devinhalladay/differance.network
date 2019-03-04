@@ -6,6 +6,7 @@ import { Switch } from 'react-router';
 
 import Home from './components/Home'
 import Diptych from './components/Diptych'
+import { timingSafeEqual } from 'crypto';
 
 
 class App extends Component {
@@ -21,6 +22,8 @@ class App extends Component {
     this.setChannelData = this.setChannelData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.unsetRedirect = this.unsetRedirect.bind(this);
+    this.unsetChannel = this.unsetChannel.bind(this);
+    this.setStateFromURL = this.setStateFromURL.bind(this);
   }
 
   setChannelData(res) {
@@ -32,6 +35,16 @@ class App extends Component {
   unsetRedirect() {
     this.setState({
       redirect: false
+    })
+  }
+
+  setStateFromURL() {
+    let chanParts = window.location.href.split('/');
+    let chan = chanParts.pop() || chanParts.pop();
+
+    this.setState({
+      channel: chan,
+      url: chan
     })
   }
 
@@ -52,16 +65,23 @@ class App extends Component {
     });
   }
 
+  unsetChannel() {
+    this.setState({
+      channel: null,
+      url: null
+    })
+  }
+
   render() {
     return (
       <BrowserRouter>
         <React.Fragment>
           <div className="site-title">
-            <Link to="/">Différance.Network</Link>
+            <Link onClick={this.unsetChannel} to="/">Différance.Network</Link>
           </div>
 
           <section className="form">
-            <form className="channel-url-form" onSubmit={this.handleSubmit}>
+            <form style={{ right: this.state.channel ? '8em' : '20px' }}className="channel-url-form" onSubmit={this.handleSubmit}>
               <input placeholder="Are.na channel URL" defaultValue={this.state.url} type="text" ref={ (input) => this.chanInput = input } />
               <input type="submit" value="Show me the way →" />
             </form>
@@ -83,6 +103,7 @@ class App extends Component {
                   setChannelData={this.setChannelData} 
                   channelData={this.state.channelData} 
                   unsetRedirect={this.unsetRedirect}
+                  setStateFromURL={this.setStateFromURL}
                   key={this.state.channel}
                 />
               }

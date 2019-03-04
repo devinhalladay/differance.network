@@ -6,12 +6,11 @@ export default class Sheet extends Component {
     super(props);
   }
   
-
   render() {
     let blockRepresentation;
     let block = this.props.block;
 
-    if (this.props.blockType === 'Image') {
+    if (this.props.blockType === 'Image' && block.image) {
       blockRepresentation = (
         <div className="block block--image">
           <img src={block.image.original.url} alt="" />
@@ -34,7 +33,7 @@ export default class Sheet extends Component {
           </a>
         </div>
       )
-    } else if (this.props.blockType === 'Attachment') {
+    } else if (this.props.blockType === 'Attachment' && block.attachment) {
       blockRepresentation = (
         <div className="block block--attachment">
           <a href={block.attachment.url}>
@@ -45,7 +44,7 @@ export default class Sheet extends Component {
           </a>
         </div>
       )
-    } else if (this.props.blockType === 'Media') {
+    } else if (this.props.blockType === 'Media' && block.embed) {
       blockRepresentation = (
         <div className="block block--media">
           {ReactHtmlParser(block.embed.html)}
