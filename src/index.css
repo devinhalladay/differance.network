@@ -162,6 +162,36 @@ a {
     margin: auto;
 }
 
+.block.block--channel.open {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 315px;
+  height: 315px;
+  margin-bottom: 3em;
+  text-decoration: none;
+  color: #24AA23 !important;
+  border-color: #24AA23;
+      box-sizing: border-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    border-width: 2px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0.125em;
+    margin: auto;
+}
+
+.block.block--channel.open a {
+  text-decoration: none;
+  color: #24AA23;
+}
+
 .block.block--channel a {
   text-decoration: none;
   color: #000;

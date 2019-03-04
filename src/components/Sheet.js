@@ -52,7 +52,7 @@ export default class Sheet extends Component {
       )
     } else if (this.props.blockType === 'Channel') {
       blockRepresentation = (
-        <div className="block block--channel">
+        <div className={`block block--channel ${block.open ? 'open' : ''}`}>
           <a target="_blank" href={`http://are.na/${block.user.slug}/${block.slug}`}>
             <p>{block.title}</p>
             <small>{block.user.full_name}</small>
