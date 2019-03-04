@@ -28,7 +28,7 @@ export default class Sheet extends Component {
           <a href={block.source.url}>
             <div className="block--link__thumbnail">
               <img src={block.image.display.url} alt="" />
-              <p>{block.source.url}</p>
+              <p><a href={block.source.url}>{block.generated_title}</a></p>
             </div>
           </a>
         </div>
