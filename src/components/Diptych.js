@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { iif } from 'rxjs';
-import Recto from './Recto'
-import Verso from './Verso'
+import Sheet from './Sheet'
 
 const Arena = require('are.na');
 const arena = new Arena();
@@ -100,8 +99,8 @@ export default class Diptych extends Component {
       <React.Fragment key={this.state.key}>
         <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
         <div className="dyptich">
-          <Verso block={this.state.versoBlock} blockType={this.state.versoBlockType}></Verso>
-          <Recto block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Recto>
+          <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
+          <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
         </div>
       </React.Fragment>
     )

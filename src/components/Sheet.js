@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
-export default class Verso extends Component {
+export default class Sheet extends Component {
   constructor(props) {
     super(props);
   }
@@ -63,7 +63,7 @@ export default class Verso extends Component {
     }
 
     return (
-      <div className="verso">
+      <div className={this.props.side}>
         {blockRepresentation}
       </div>
     )
