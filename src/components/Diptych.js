@@ -28,34 +28,27 @@ export default class Diptych extends Component {
       rectoBlocID: null,
       loading: true
     }
-
-    if (this.props.match.params.verso || this.props.match.params.recto) {
-      this.setState({
-        versoBlockID: this.props.match.params.verso,
-        rectoBlockID: this.props.match.params.recto
-      })
-    }
   }
 
   apiCall(path, params) {
-    if (this.state.versoBlockID || this.state.rectoBlocID) {
-      let endpoint = `https://api.are.na/v2/blocks/${blockId}}`
-      return fetch(endpoint, apiInit)
-        .then((response) => {
-          return response.json()
-        })
-    } else {
-      let endpoint = `https://api.are.na/v2/channels/${(this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL()}`
-      if (params) {
-        let pageNumber = params.page
-        let pageLength = params.per
-        endpoint = endpoint + "?page=" + pageNumber + "&amp;per=" + pageLength
-      }
-      return fetch(endpoint, apiInit)
-        .then((response) => {
-          return response.json()
-        })
+    let endpoint = `https://api.are.na/v2/channels/${(this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL()}`
+    if (params) {
+      let pageNumber = params.page
+      let pageLength = params.per
+      endpoint = endpoint + "?page=" + pageNumber + "&amp;per=" + pageLength
     }
+    return fetch(endpoint, apiInit)
+      .then((response) => {
+        return response.json()
+      })
+  }
+
+  blockApiCall(blockId) {
+    let endpoint = `https://api.are.na/v2/blocks/${blockId}}`
+    return fetch(endpoint, apiInit)
+      .then((response) => {
+        return response.json()
+      })
   }
 
   shuffle(a) {
@@ -111,13 +104,35 @@ export default class Diptych extends Component {
     })
   }
 
+  async getBlocksData() {
+    let fetchedVersoBlock = await this.blockApiCall(this.props.match.params.verso);
+    let fetchedRectoBlock = await this.blockApiCall(this.props.match.params.recto);
+
+    this.setState({
+      versoBlock: fetchedVersoBlock,
+      rectoBlock: fetchedRectoBlock,
+      loading: false
+    })
+
+    this.setState({
+      versoBlockType: fetchedVersoBlock.class,
+      rectoBlockType: fetchedRectoBlock.class,
+    })
+  }
+
   componentWillMount() {
     this.props.setStateFromURL();
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-    this.getChannelData();
+
+    if (this.props.match.params.verso || this.props.match.params.recto) {
+      this.getBlocksData();
+    } else {
+      this.getChannelData();
+    }
+
     this.props.unsetRedirect();
   }
 
@@ -129,14 +144,18 @@ export default class Diptych extends Component {
     if (this.state.versoBlock && this.state.rectoBlock) {
       return (
         <React.Fragment>
-          <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
+          {
+            (this.props.match.params.verso || this.props.match.params.recto) ? '' : <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
+          }
           <div className="dyptich">
             <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
             <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
           </div>
-          <Clipboard className="copy-button" data-clipboard-text={`${window.location.href}/${this.state.versoBlockID}/${this.state.rectoBlockID}`}>
-            Copy Permalink
-          </Clipboard>
+          {
+            (this.props.match.params.verso || this.props.match.params.recto) ? '' : <Clipboard className="copy-button" data-clipboard-text={`${window.location.href}/${this.state.versoBlockID}/${this.state.rectoBlockID}`}>
+              Copy Permalink
+            </Clipboard>
+          }
         </React.Fragment>
       )
     } else if (this.state.loading == true) {

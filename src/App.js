@@ -3,11 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { Switch } from 'react-router';
 
-
 import Home from './components/Home'
 import Diptych from './components/Diptych'
-import SavedDiptych from './components/SavedDiptych'
-import { timingSafeEqual } from 'crypto';
 
 
 class App extends Component {
@@ -57,7 +54,7 @@ class App extends Component {
   handleSubmit(e) {
     e.preventDefault();
     let chanParts = this.chanInput.value.split('/');
-    let chan = chanParts[1];
+    let chan = chanParts.pop() || chanParts.pop();
 
     this.setState({
       url: this.chanInput.value,
@@ -88,7 +85,7 @@ class App extends Component {
             </form>
           </section>
 
-          {this.state.redirect ? <Redirect to={this.state.channel} push /> : ''}
+          {this.state.redirect ? <Redirect to={`/${this.state.channel}`} push /> : ''}
 
           <Switch>
             <Route 
@@ -96,21 +93,8 @@ class App extends Component {
               path="/"
               render={(props) => <Home {...props} />} 
             />
-            {/* <Route
-              path="/:channel/:verso/:recto"
-              render={(props) =>
-                <SavedDiptych {...props}
-                  chan={this.state.channel}
-                  setChannelData={this.setChannelData}
-                  channelData={this.state.channelData}
-                  unsetRedirect={this.unsetRedirect}
-                  setStateFromURL={this.setStateFromURL}
-                  key={this.state.channel}
-                />
-              }
-            /> */}
             <Route 
-              path="/:channel/:verso/:verso" 
+              path={["/:channel/:verso/:recto", "/:channel"]} 
               render={(props) => 
                 <Diptych {...props} 
                   chan={this.state.channel} 
