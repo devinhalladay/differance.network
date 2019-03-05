@@ -4,19 +4,11 @@ import { Redirect } from 'react-router-dom';
 
 import Sheet from './Sheet'
 
-const Arena = require('are.na');
-const arena = new Arena();
-
-
-
 const apiInit = {
   method: 'GET',
   mode: 'cors',
   cache: 'no-cache'
 };
-
-let title;
-let blockType;
 
 export default class Diptych extends Component {
   constructor(props) {
@@ -78,8 +70,6 @@ export default class Diptych extends Component {
 
     let numBlocks = (await this.apiCall(chan)).length
     let totalPages = Math.ceil(numBlocks / itemsPerPage);
-
-    title = (await this.apiCall(chan)).title
 
     if (this.props.channelData) {
       for (let i = 0; i < totalPages; i++) {
@@ -183,7 +173,7 @@ export default class Diptych extends Component {
           </div>
         </React.Fragment>
       )
-    } else if (this.state.loading == true) {
+    } else if (this.state.loading === true) {
       return (
         <p>Loading…</p>
       )

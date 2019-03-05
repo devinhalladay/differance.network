@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 export default class Sheet extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class Sheet extends Component {
     } else if (this.props.blockType === 'Link' && block.source) {
       blockRepresentation = (
         <div className="block block--link">
-          <a href={block.source.url}>
+          <a href={block.source.url} target="_blank" rel="noopener noreferrer">
             <div className="block--link__thumbnail">
               <img src={block.image.display.url} alt="" />
               <p>{block.generated_title}</p>
@@ -36,7 +36,7 @@ export default class Sheet extends Component {
     } else if (this.props.blockType === 'Attachment' && block.attachment) {
       blockRepresentation = (
         <div className="block block--attachment">
-          <a href={block.attachment.url}>
+          <a href={block.attachment.url} target="_blank" rel="noopener noreferrer">
             <div className="block--attachment__thumnbail">
               <img src={block.image ? block.image.display.url : ''} alt="" />
               <p>{block.generated_title}</p>
@@ -53,7 +53,7 @@ export default class Sheet extends Component {
     } else if (this.props.blockType === 'Channel') {
       blockRepresentation = (
         <div className={`block block--channel ${block.open ? 'open' : ''}`}>
-          <a target="_blank" href={`http://are.na/${block.user.slug}/${block.slug}`}>
+          <a target="_blank" rel="noopener noreferrer" href={`http://are.na/${block.user.slug}/${block.slug}`}>
             <p>{block.title}</p>
             <small>{block.user.full_name}</small>
             <small>{block.length} Blocks</small>
