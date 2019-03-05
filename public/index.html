@@ -16,4 +16,19 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
+
+  <!-- Self-hosted analytics platform, don't worry, we don't send your data to Google -->
+  <script>
+    (function (f, a, t, h, o, m) {
+      a[h] = a[h] || function () {
+        (a[h].q = a[h].q || []).push(arguments)
+      };
+      o = f.createElement('script'),
+        m = f.getElementsByTagName('script')[0];
+      o.async = 1; o.src = t; o.id = 'fathom-script';
+      m.parentNode.insertBefore(o, m)
+    })(document, window, '//dh-a.herokuapp.com/tracker.js', 'fathom');
+    fathom('set', 'siteId', 'HVFCI');
+    fathom('trackPageview');
+  </script>
 </html>

@@ -26,24 +26,39 @@ export default class Diptych extends Component {
     }
   }
 
-  apiCall(path, params) {
-    let endpoint = `https://api.are.na/v2/channels/${(this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL()}`
-    if (params) {
-      let pageNumber = params.page
-      let pageLength = params.per
-      endpoint = endpoint + "?page=" + pageNumber + "&amp;per=" + pageLength
-    }
-    return fetch(endpoint, apiInit)
-      .then((response) => {
-        return response.json()
-      })
+  componentWillMount() {
+    this.props.setStateFromURL();
   }
 
-  blockApiCall(blockId) {
-    let endpoint = `https://api.are.na/v2/blocks/${blockId}}`
+  componentDidMount() {
+    this.setState({ loading: true });
+
+    if (this.props.match.params.verso || this.props.match.params.recto) {
+      this.getBlocksData();
+    } else {
+      this.getChannelData();
+    }
+
+    this.props.unsetRedirect();
+  }
+
+  apiCall(type, path, params) {
+    let endpoint; 
+
+    if (type === 'block') {
+      endpoint = `https://api.are.na/v2/blocks/${path}`
+    } else if (type === 'channel') {
+      endpoint = `https://api.are.na/v2/channels/${(this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL()}`
+      if (params) {
+        let pageNumber = params.page
+        let pageLength = params.per
+        endpoint = endpoint + "?page=" + pageNumber + "&amp;per=" + pageLength
+      }
+    }
+
     return fetch(endpoint, apiInit)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
   }
 
@@ -68,12 +83,12 @@ export default class Diptych extends Component {
     var chan = (this.props.chan !== '') ? this.props.chan : this.getLastDirFromURL();
     let blockArray = [];
 
-    let numBlocks = (await this.apiCall(chan)).length
+    let numBlocks = (await this.apiCall('channel', chan)).length
     let totalPages = Math.ceil(numBlocks / itemsPerPage);
 
     if (this.props.channelData) {
       for (let i = 0; i < totalPages; i++) {
-        blockArray.push((await this.apiCall(chan, {
+        blockArray.push((await this.apiCall('channel', chan, {
           page: i,
           per: itemsPerPage
         })).contents)
@@ -99,8 +114,8 @@ export default class Diptych extends Component {
   }
 
   async getBlocksData() {
-    let fetchedVersoBlock = await this.blockApiCall(this.props.match.params.verso);
-    let fetchedRectoBlock = await this.blockApiCall(this.props.match.params.recto);
+    let fetchedVersoBlock = await this.apiCall('block', this.props.match.params.verso);
+    let fetchedRectoBlock = await this.apiCall('block', this.props.match.params.recto);
 
     this.setState({
       versoBlock: fetchedVersoBlock,
@@ -112,22 +127,6 @@ export default class Diptych extends Component {
       versoBlockType: fetchedVersoBlock.class,
       rectoBlockType: fetchedRectoBlock.class,
     })
-  }
-
-  componentWillMount() {
-    this.props.setStateFromURL();
-  }
-
-  componentDidMount() {
-    this.setState({ loading: true });
-
-    if (this.props.match.params.verso || this.props.match.params.recto) {
-      this.getBlocksData();
-    } else {
-      this.getChannelData();
-    }
-
-    this.props.unsetRedirect();
   }
 
   refresh() {
