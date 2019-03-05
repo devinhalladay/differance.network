@@ -158,17 +158,28 @@ export default class Diptych extends Component {
           
           <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
           <div className="dyptich">
-            <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
-            <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
+            <Sheet 
+              side="verso" 
+              block={this.state.versoBlock} 
+              blockType={this.state.versoBlockType}>
+            </Sheet>
+            <Sheet 
+              side="recto" 
+              block={this.state.rectoBlock} 
+              blockType={this.state.rectoBlockType}>
+            </Sheet>
           </div>
           <div className="copy-button__container">
             <p style={tooltipStyle}>Copied!</p>
-            <Clipboard onClick={this.handleClipboardCopy.bind(this)}
-            className="copy-button" 
+
+            <Clipboard 
+              onClick={this.handleClipboardCopy.bind(this)}
+              className="copy-button" 
               data-clipboard-text={(this.props.match.params.verso || this.props.match.params.recto) ? `${window.location.href}` : `${window.location.protocol}/${window.location.host}/${this.props.chan}/${this.state.versoBlockID}/${this.state.rectoBlockID}`
             }>
-                Copy Permalink
-              </Clipboard>
+              Copy Permalink
+            </Clipboard>
+            
           </div>
         </React.Fragment>
       )
