@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Clipboard from 'react-clipboard.js';
+import { Redirect } from 'react-router-dom';
+
 import Sheet from './Sheet'
 
 const Arena = require('are.na');
@@ -26,7 +28,8 @@ export default class Diptych extends Component {
       versoBlockType: null,
       versoBlockID: null,
       rectoBlocID: null,
-      loading: true
+      loading: true,
+      redirect: false
     }
   }
 
@@ -137,7 +140,10 @@ export default class Diptych extends Component {
   }
 
   refresh() {
-    this.getChannelData()
+    this.setState({
+      redirect: true
+    })
+    this.getChannelData();
   }
 
   render() {
@@ -145,17 +151,21 @@ export default class Diptych extends Component {
       return (
         <React.Fragment>
           {
-            (this.props.match.params.verso || this.props.match.params.recto) ? '' : <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
+            this.state.redirect ? <Redirect push to={`/${this.props.chan}`} /> : null
           }
+          
+          <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
           <div className="dyptich">
             <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
             <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
           </div>
-          {
-            (this.props.match.params.verso || this.props.match.params.recto) ? '' : <Clipboard className="copy-button" data-clipboard-text={`${window.location.href}/${this.state.versoBlockID}/${this.state.rectoBlockID}`}>
+          <Clipboard 
+          className="copy-button" 
+            data-clipboard-text={(this.props.match.params.verso || this.props.match.params.recto) ? `${window.location.href}` : `${window.location.protocol}/${window.location.host}/${this.props.chan}/${this.state.versoBlockID}/${this.state.rectoBlockID}`
+          }>
               Copy Permalink
             </Clipboard>
-          }
+
         </React.Fragment>
       )
     } else if (this.state.loading == true) {
