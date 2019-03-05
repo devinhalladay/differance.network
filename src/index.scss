@@ -72,15 +72,27 @@ img {
   width: fit-content;
   box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
   border-radius: 10px;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   z-index: 999;
   outline: none;
   cursor: pointer;
 
   @media (max-width: 800px) {
     // position: relative;
+  }
+
+  &__container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+
+    p {
+      display: block;
+      padding: 6px;
+      background: #000;
+      border-radius: 6px;
+      width: fit-content;
+      color: #fff;
+    }
   }
 }
 

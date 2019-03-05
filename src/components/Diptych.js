@@ -29,7 +29,8 @@ export default class Diptych extends Component {
       versoBlockID: null,
       rectoBlocID: null,
       loading: true,
-      redirect: false
+      redirect: false,
+      tooltip: false
     }
   }
 
@@ -146,7 +147,19 @@ export default class Diptych extends Component {
     this.getChannelData();
   }
 
+  handleClipboardCopy() {
+    this.setState({ tooltip: true })
+
+    setTimeout(() => {
+      this.setState({ tooltip: false })
+    }, 1000)
+  }
+
   render() {
+    const tooltipStyle = {
+      display: this.state.tooltip ? 'block' : 'none'
+    }
+
     if (this.state.versoBlock && this.state.rectoBlock) {
       return (
         <React.Fragment>
@@ -159,13 +172,15 @@ export default class Diptych extends Component {
             <Sheet side="verso" block={this.state.versoBlock} blockType={this.state.versoBlockType}></Sheet>
             <Sheet side="recto" block={this.state.rectoBlock} blockType={this.state.rectoBlockType}></Sheet>
           </div>
-          <Clipboard 
-          className="copy-button" 
-            data-clipboard-text={(this.props.match.params.verso || this.props.match.params.recto) ? `${window.location.href}` : `${window.location.protocol}/${window.location.host}/${this.props.chan}/${this.state.versoBlockID}/${this.state.rectoBlockID}`
-          }>
-              Copy Permalink
-            </Clipboard>
-
+          <div className="copy-button__container">
+            <p style={tooltipStyle}>Copied!</p>
+            <Clipboard onClick={this.handleClipboardCopy.bind(this)}
+            className="copy-button" 
+              data-clipboard-text={(this.props.match.params.verso || this.props.match.params.recto) ? `${window.location.href}` : `${window.location.protocol}/${window.location.host}/${this.props.chan}/${this.state.versoBlockID}/${this.state.rectoBlockID}`
+            }>
+                Copy Permalink
+              </Clipboard>
+          </div>
         </React.Fragment>
       )
     } else if (this.state.loading == true) {
