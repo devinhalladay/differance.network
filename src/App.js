@@ -107,6 +107,8 @@ class App extends Component {
         channel: `${slug}`,
         redirect: true,
       })
+
+      this.chanInput = `${slug}`
     }
   }
 
