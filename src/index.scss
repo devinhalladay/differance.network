@@ -183,13 +183,12 @@ button {
   padding-bottom: 2em;
 }
 
-// #root {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   min-height: 100vh;
-//   flex-direction: column;
-// }
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
 
 section.info {
   font-size: 20px;
@@ -204,11 +203,6 @@ section {
 .form {
   flex-grow: 2;
   z-index: 999;
-  @media (max-width: 800px) {
-    align-self: flex-start;
-    padding-left: 20px;
-    padding-top: 20px;
-  }
 }
 
 a {
@@ -299,7 +293,9 @@ a {
 }
 
 .control-center {
+  left: 0;
   display: flex;
+  top: 0;
   position: fixed;
   width: calc(100% - 104px);
   padding-top: 20px;
@@ -311,8 +307,7 @@ a {
   bottom: 0;
   position: fixed;
   display: flex;
-  position: absolute;
-  width: calc(100% - 40px);
+  width: calc(100% - 20px);
   margin-right: 20px;
   padding-right: 20px;
   padding-bottom: 20px;

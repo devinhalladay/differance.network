@@ -53,7 +53,7 @@ class App extends Component {
   }
 
   getRandomChannels() {
-    let endpoint = `http://api.are.na/v2/channels?page=${Math.floor(Math.random() * 80) + 40}&amp;per=40`
+    let endpoint = `https://api.are.na/v2/channels?page=${Math.floor(Math.random() * 80) + 40}&amp;per=40`
 
     return fetch(endpoint, apiInit)
       .then((response) => {
@@ -108,10 +108,6 @@ class App extends Component {
         redirect: true,
       })
     }
-
-    console.log(`http://are.na/${user}/${slug}`);
-
-    console.log(channel);
   }
 
   render() {
