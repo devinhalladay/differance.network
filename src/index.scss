@@ -25,9 +25,6 @@ img {
   width: fit-content;
   box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
   border-radius: 10px;
-  position: fixed;
-  top: 20px;
-  left: 20px;
   z-index: 999;
 
   @media (max-width: 800px) {
@@ -41,24 +38,42 @@ img {
   margin: auto;
 }
 
-.reload-button {
+button {
+  height: 44px;
   box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
+}
+
+.reload-button {
   font-size: 18px;
   background: #ffffff;
   padding: 10px;
   border: 1px solid #000;
   width: fit-content;
-  box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
   border-radius: 10px;
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 999;
   outline: none;
-  cursor: pointer;
+  cursor: pointer;  
+}
 
-  @media (max-width: 800px) {
-    // position: relative;
+.random-button {
+  font-size: 18px;
+  background: #ffffff;
+  padding: 10px;
+  border: 1px solid #000;
+  width: fit-content;
+  border-radius: 10px;
+  z-index: 999;
+  outline: none;
+  line-height: 0;
+  cursor: pointer;
+  width: 44px;
+
+  svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -73,17 +88,10 @@ img {
   border-radius: 10px;
   z-index: 999;
   outline: none;
+  height: 44px;
   cursor: pointer;
 
-  @media (max-width: 800px) {
-    // position: relative;
-  }
-
   &__container {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-
     p {
       display: block;
       padding: 6px;
@@ -103,10 +111,6 @@ img {
 .channel-url-form {
   display: flex;
   text-align: center;
-  position: fixed;
-  top: 20px;
-  left: 14em;
-  right: 8em;
   transition: 0.2s right ease-in-out;
 
   @media (max-width: 800px) {
@@ -127,6 +131,10 @@ img {
   padding: 0 1rem;
   background-color: #fff;
   outline: none;
+
+  &:focus {
+    border-color: #000;
+  }
 }
 
 .channel-url-form input[type="submit"] {
@@ -134,9 +142,9 @@ img {
   width: fit-content;
   outline: none;
   font-size: 1rem;
-  margin-left: 1em;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 16px;
+  margin-left: -46px;
+  padding-left: 16px;
   height: 44px;
   color: #fff;
   background-color: #000;
@@ -147,6 +155,7 @@ img {
   transition: background-position .3s ease;
   cursor: pointer;
   font-weight: bold;
+  z-index: 1;
 }
 
 .dyptich {
@@ -174,13 +183,13 @@ img {
   padding-bottom: 2em;
 }
 
-#root {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  flex-direction: column;
-}
+// #root {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   min-height: 100vh;
+//   flex-direction: column;
+// }
 
 section.info {
   font-size: 20px;
@@ -189,15 +198,16 @@ section.info {
 }
 
 section {
-  padding: 0 40px;
+  padding: 0 20px;
+}
 
-  &.form {
-    z-index: 999;
-    @media (max-width: 800px) {
-      align-self: flex-start;
-      padding-left: 20px;
-      padding-top: 20px;
-    }
+.form {
+  flex-grow: 2;
+  z-index: 999;
+  @media (max-width: 800px) {
+    align-self: flex-start;
+    padding-left: 20px;
+    padding-top: 20px;
   }
 }
 
@@ -286,4 +296,50 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.control-center {
+  display: flex;
+  position: fixed;
+  width: calc(100% - 104px);
+  padding-top: 20px;
+  padding-left: 20px;
+  transition: 0.2 all ease-in-out;
+}
+
+.meta-buttons {
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  position: absolute;
+  width: calc(100% - 40px);
+  margin-right: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  justify-content: right;
+  justify-content: flex-end;
+
+  a.visit-button {
+    box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
+    font-size: 18px;
+    background: #ffffff;
+    border: 1px solid #000;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    box-shadow: 0px 0px 8px rgba(70, 84, 80, 0.3);
+    border-radius: 10px;
+    z-index: 999;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 44px;
+    justify-content: center;
+    margin-left: 20px;
+
+    svg {
+      display: block;
+    }
+  }
 }

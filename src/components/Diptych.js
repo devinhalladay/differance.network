@@ -156,7 +156,16 @@ export default class Diptych extends Component {
             this.state.redirect ? <Redirect push to={`/${this.props.chan}`} /> : null
           }
           
-          <button className="reload-button" onClick={() => this.refresh()}>Refresh</button>
+          <button className="reload-button" onClick={() => this.refresh()}>
+            <svg width="22px" height="22px" viewBox="0 0 22 22">
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="check-circle" transform="translate(11.000000, 11.000000) rotate(-315.000000) translate(-11.000000, -11.000000) translate(-3.000000, -3.000000)">
+                  <path d="M24,13.08 L24,14 C23.9974678,18.4286859 21.082294,22.328213 16.8353524,23.583901 C12.5884109,24.839589 8.02139355,23.1523121 5.61095509,19.4370663 C3.20051662,15.7218205 3.52086345,10.863639 6.39827419,7.49707214 C9.27568494,4.13050531 14.0247126,3.05752528 18.07,4.86" id="Path" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(13.999972, 13.994426) rotate(-30.000000) translate(-13.999972, -13.994426) "></path>
+                  <path d="M18.2402873,4.43412157 L12.7480695,7.57253173 C12.5083107,7.70953672 12.2028834,7.62623835 12.0658784,7.38647963 C12.0227077,7.31093078 12,7.22542363 12,7.13841016 L12,0.861589839 C12,0.585447464 12.2238576,0.361589839 12.5,0.361589839 C12.5870135,0.361589839 12.6725206,0.384297498 12.7480695,0.427468268 L18.2402873,3.56587843 C18.480046,3.70288341 18.5633443,4.00831075 18.4263394,4.24806947 C18.3820447,4.32558511 18.3178029,4.38982692 18.2402873,4.43412157 Z" id="Triangle" fill="#000000" fill-rule="nonzero"></path>
+                </g>
+              </g>
+            </svg>
+          </button>
           <div className="dyptich">
             <Sheet 
               side="verso" 
@@ -169,17 +178,23 @@ export default class Diptych extends Component {
               blockType={this.state.rectoBlockType}>
             </Sheet>
           </div>
-          <div className="copy-button__container">
-            <p style={tooltipStyle}>Copied!</p>
-
-            <Clipboard 
-              onClick={this.handleClipboardCopy.bind(this)}
-              className="copy-button" 
-              data-clipboard-text={(this.props.match.params.verso || this.props.match.params.recto) ? `${window.location.href}` : `${window.location.protocol}/${window.location.host}/${this.props.chan}/${this.state.versoBlockID}/${this.state.rectoBlockID}`
-            }>
-              Copy Permalink
-            </Clipboard>
-            
+          <div class="meta-buttons">
+            <div className="copy-button__container">
+              <p style={tooltipStyle}>Copied!</p>
+  
+              <Clipboard 
+                onClick={this.handleClipboardCopy.bind(this)}
+                className="copy-button" 
+                data-clipboard-text={(this.props.match.params.verso || this.props.match.params.recto) ? `${window.location.href}` : `${window.location.protocol}/${window.location.host}/${this.props.chan}/${this.state.versoBlockID}/${this.state.rectoBlockID}`
+              }>
+                Copy Permalink
+              </Clipboard>
+              
+            </div>
+  
+            <a className="button visit-button" target="_blank" rel="noopener noreferrer" href={`https://are.na/${this.state.versoBlock.user.slug}/${this.props.match.params.channel}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+            </a>
           </div>
         </React.Fragment>
       )
