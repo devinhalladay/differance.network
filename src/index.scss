@@ -54,6 +54,7 @@ button {
   top: 20px;
   right: 20px;
   z-index: 999;
+  width: 44px;
   outline: none;
   cursor: pointer;  
 }
@@ -161,9 +162,10 @@ button {
 .dyptich {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  min-height: 100vh;
   align-items: center;
+  max-height: calc(100vh - 90px);
   width: 100vw;
+  padding-top: 60px;
 }
 
 

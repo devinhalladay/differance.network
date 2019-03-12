@@ -82,6 +82,8 @@ class App extends Component {
       channel: null,
       url: null
     })
+
+    this.chanInput.value = ''
   }
 
   async pickRandomChannel() {
